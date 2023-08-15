@@ -44,7 +44,7 @@ class AuthTest extends TestCase
             ]
         ];
 
-        $response = $this->post('/api/register', $data);
+        $response = $this->post('/api/v1/register', $data);
 
         $response->assertStatus(201);
     }
@@ -58,7 +58,7 @@ class AuthTest extends TestCase
             "password" => "123456789"
         ];
 
-        $response = $this->post('/api/login', $data);
+        $response = $this->post('/api/v1/login', $data);
 
         $response->assertStatus(200);
     }
@@ -68,14 +68,14 @@ class AuthTest extends TestCase
         $user = User::create(["email" => "cyutht3t.30@gmail.com", "password" => "123456789", "role" => "athlete"]);
         $token = Auth::login($user);
 
-        $response = $this->post("/api/logout");
+        $response = $this->post("/api/v1/logout");
 
         $response->assertStatus(200);
     }
 
     public function test_unauthenticated_user_knocking_on_protected_route(): void
     {
-        $response = $this->post("/api/protected");
+        $response = $this->post("/api/v1/protected");
 
         $response->assertStatus(401);
     }
