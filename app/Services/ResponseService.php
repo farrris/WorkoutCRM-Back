@@ -9,7 +9,7 @@ class ResponseService
     {
         return [
             'status' => $status ? "success" : "error",
-            'message' => (string)$message,
+            'message' => $message,
             'data' => (object)$data,
             'errors' => (object)$errors,
         ];
@@ -28,9 +28,9 @@ class ResponseService
         return self::sendJsonResponse(true, 200, [], $data, $message);
     }
 
-    public static function unSuccess($data = [], $message = [])
+    public static function unSuccess($data = [], $message = [], $errors = [])
     {
-        return self::sendJsonResponse(false, 200, [], $data, $message);
+        return self::sendJsonResponse(false, 200, $errors, $data, $message);
     }
 
     public static function сreated($data = [], $message = "Created")
@@ -38,9 +38,9 @@ class ResponseService
         return self::sendJsonResponse(true, 201, [], $data, $message);
     }
 
-    public static function badRequest($data = [], $message = "Bad request")
+    public static function badRequest($data = [], $message = "Bad request", $errors = [])
     {
-        return self::sendJsonResponse(false, 400, [], $data, $message);
+        return self::sendJsonResponse(false, 400, $errors, $data, $message);
     }
 
     public static function unauthorized($data = [], $message = "Unauthorized")
