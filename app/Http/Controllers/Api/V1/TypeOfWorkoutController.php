@@ -8,6 +8,7 @@ use App\Http\Resources\TypeOfWorkoutResource;
 use App\Models\TypeOfWorkout;
 use App\Services\ResponseService;
 use App\Services\TypeOfWorkoutService;
+use Illuminate\Http\JsonResponse;
 
 class TypeOfWorkoutController extends Controller
 {
@@ -16,9 +17,28 @@ class TypeOfWorkoutController extends Controller
     {
     }
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/v1/type-of-workout",
+     *     operationId="typeOfWorkoutIndex",
+     *     tags={"Type of workout"},
+     *     description="Метод возвращает все типы тренировок",
+     *     @OA\Response(response="200",
+     *          description="OK",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                 @OA\Property(
+     *                     property="video",
+     *                      ref="#/components/schemas/TypeOfWorkout"
+     *                 ),
+     *              )
+     *          ),
+     *      )
+     * )
+     *
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $types_of_workout = $this->typeOfWorkoutService->index();
         return ResponseService::success([
@@ -27,9 +47,40 @@ class TypeOfWorkoutController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/v1/type-of-workout/",
+     *     operationId="typeOfWorkoutStore",
+     *     tags={"Type of workout"},
+     *     description="Метод создает тип тренировки",
+     *
+     *     @OA\RequestBody(
+     *       @OA\MediaType(
+     *           mediaType="application/json",
+     *           @OA\Schema(
+     *              @OA\Property(property="title",type="string",example="test title"),
+     *              @OA\Property(property="description",type="string",example="test description"),
+     *           ),
+     *       ),
+     *     ),
+     *     @OA\Response(response="200",
+     *          description="OK",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                 @OA\Property(
+     *                     property="video",
+     *                      ref="#/components/schemas/TypeOfWorkout"
+     *                 ),
+     *              )
+     *          )
+     *      )
+     * )
+     * 
+     * @param StoreUpdateTypeOfWorkoutRequest
+     * @return JsonResponse
      */
-    public function store(StoreUpdateTypeOfWorkoutRequest $request)
+
+    public function store(StoreUpdateTypeOfWorkoutRequest $request): JsonResponse
     {
         $validated = $request->validated();
 
@@ -44,9 +95,42 @@ class TypeOfWorkoutController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/v1/type-of-workout/{id}",
+     *     operationId="typeOfWorkoutShow",
+     *     tags={"Type of workout"},
+     *     description="Метод возвращает тип тренировки по id",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="id типа тренировки",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Response(response="200",
+     *          description="OK",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                 @OA\Property(
+     *                     property="video",
+     *                      ref="#/components/schemas/TypeOfWorkout"
+     *                 ),
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(response="404",
+     *          description="NOT FOUND"
+     *      ),
+     * )
+     * 
+     * @param TypeOfWorkout
+     * 
+     * @return JsonResponse
      */
-    public function show(TypeOfWorkout $typeOfWorkout)
+    public function show(TypeOfWorkout $typeOfWorkout): JsonResponse
     {
         return ResponseService::success([
             "type_of_workout" => TypeOfWorkoutResource::make($typeOfWorkout)
@@ -54,9 +138,52 @@ class TypeOfWorkoutController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Post(
+     *     path="/api/v1/type-of-workout/{id}",
+     *     operationId="typeOfWorkoutUpdate",
+     *     tags={"Type of workout"},
+     *     description="Метод обновляет тип тренировки",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="id типа тренировки",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\RequestBody(
+     *       @OA\MediaType(
+     *           mediaType="application/json",
+     *           @OA\Schema(
+     *              @OA\Property(property="title",type="string",example="test title"),
+     *              @OA\Property(property="description",type="string",example="test description"),
+     *           ),
+     *       ),
+     *     ),
+     *     @OA\Response(response="200",
+     *          description="OK",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                 @OA\Property(
+     *                     property="video",
+     *                      ref="#/components/schemas/TypeOfWorkout"
+     *                 ),
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(response="404",
+     *          description="NOT FOUND"
+     *      ),
+     * )
+     * 
+     * @param StoreUpdateTypeOfWorkoutRequest
+     * @param TypeOfWorkout
+     * 
+     * @return JsonResponse
      */
-    public function update(StoreUpdateTypeOfWorkoutRequest $request, TypeOfWorkout $typeOfWorkout)
+    public function update(StoreUpdateTypeOfWorkoutRequest $request, TypeOfWorkout $typeOfWorkout): JsonResponse
     {
         $validated = $request->validated();
 
@@ -71,12 +198,34 @@ class TypeOfWorkoutController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/v1/type-of-workout/{id}",
+     *     operationId="typeOfWorkoutDelete",
+     *     tags={"Type of workout"},
+     *     description="Метод удаляет тип тренировки по id",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="id типа тренировки",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *     @OA\Response(response="200",
+     *          description="OK",
+     *     ),
+     *     @OA\Response(response="404",
+     *          description="NOT FOUND"
+     *     ),
+     * )
+     * 
+     * @param TypeOfWorkout
+     * 
+     * @return JsonResponse
      */
-    public function destroy(TypeOfWorkout $typeOfWorkout)
+    public function destroy(TypeOfWorkout $typeOfWorkout): JsonResponse
     {
-        $type_of_workout = $this->typeOfWorkoutService->destroy($typeOfWorkout);
-
         return ResponseService::success(
             message: "type of workout succesful deleted"
         );

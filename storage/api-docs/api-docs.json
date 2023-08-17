@@ -1,0 +1,230 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Workout Online",
+        "description": "Документация для Workout",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/type-of-workout": {
+            "get": {
+                "tags": [
+                    "Type of workout"
+                ],
+                "description": "Метод возвращает все типы тренировок",
+                "operationId": "typeOfWorkoutIndex",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "video": {
+                                            "$ref": "#/components/schemas/TypeOfWorkout"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/type-of-workout/": {
+            "post": {
+                "tags": [
+                    "Type of workout"
+                ],
+                "description": "Метод создает тип тренировки",
+                "operationId": "typeOfWorkoutStore",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "test title"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "test description"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "video": {
+                                            "$ref": "#/components/schemas/TypeOfWorkout"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/type-of-workout/{id}": {
+            "get": {
+                "tags": [
+                    "Type of workout"
+                ],
+                "description": "Метод возвращает тип тренировки по id",
+                "operationId": "typeOfWorkoutShow",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id типа тренировки",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "video": {
+                                            "$ref": "#/components/schemas/TypeOfWorkout"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Type of workout"
+                ],
+                "description": "Метод обновляет тип тренировки",
+                "operationId": "typeOfWorkoutUpdate",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id типа тренировки",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "test title"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "test description"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "video": {
+                                            "$ref": "#/components/schemas/TypeOfWorkout"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Type of workout"
+                ],
+                "description": "Метод удаляет тип тренировки по id",
+                "operationId": "typeOfWorkoutDelete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id типа тренировки",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "NOT FOUND"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "TypeOfWorkout": {
+                "title": "TypeOfWorkout",
+                "description": "Тип тренировки",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "Название типа тренировки",
+                        "type": "string",
+                        "example": "power"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "TypeOfWorkout"
+                }
+            }
+        }
+    }
+}
