@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Api\V1\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get("/ping", function () {
-    return "pong";
+Route::controller(AuthController::class)->group(function () {
+    Route::post('login', 'login');
+    Route::post('register', 'register');
+    Route::post('logout', 'logout')->middleware("auth:api");
+    Route::post('refresh', 'refresh')->middleware("auth:api");
+    Route::post('protected', 'protected')->middleware("auth:api");
 });
