@@ -28,7 +28,7 @@ class TypeOfWorkoutController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                 @OA\Property(
-     *                     property="video",
+     *                     property="typeOfWorkout",
      *                      ref="#/components/schemas/TypeOfWorkout"
      *                 ),
      *              )
@@ -68,7 +68,7 @@ class TypeOfWorkoutController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                 @OA\Property(
-     *                     property="video",
+     *                     property="typeOfWorkout",
      *                      ref="#/components/schemas/TypeOfWorkout"
      *                 ),
      *              )
@@ -115,7 +115,7 @@ class TypeOfWorkoutController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                 @OA\Property(
-     *                     property="video",
+     *                     property="typeOfWorkout",
      *                      ref="#/components/schemas/TypeOfWorkout"
      *                 ),
      *              )
@@ -167,7 +167,7 @@ class TypeOfWorkoutController extends Controller
      *              mediaType="application/json",
      *              @OA\Schema(
      *                 @OA\Property(
-     *                     property="video",
+     *                     property="typeOfWorkout",
      *                      ref="#/components/schemas/TypeOfWorkout"
      *                 ),
      *              )
