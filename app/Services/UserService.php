@@ -10,7 +10,8 @@ class UserService
     {
         $user = User::create([
             "email" => $data["email"],
-            "password" => $data["password"]
+            "password" => $data["password"],
+            "role" => $data["role"] ?? "athlete"
         ]);
 
         return $user;

@@ -22,6 +22,7 @@ class TypeOfWorkoutController extends Controller
      *     operationId="typeOfWorkoutIndex",
      *     tags={"Type of workout"},
      *     description="Метод возвращает все типы тренировок",
+     *     security={{"bearer_token":{}}},
      *     @OA\Response(response="200",
      *          description="OK",
      *          @OA\MediaType(
@@ -52,7 +53,8 @@ class TypeOfWorkoutController extends Controller
      *     operationId="typeOfWorkoutStore",
      *     tags={"Type of workout"},
      *     description="Метод создает тип тренировки",
-     *
+     *     security={{"bearer_token":{}}},
+     * 
      *     @OA\RequestBody(
      *       @OA\MediaType(
      *           mediaType="application/json",
@@ -100,6 +102,7 @@ class TypeOfWorkoutController extends Controller
      *     operationId="typeOfWorkoutShow",
      *     tags={"Type of workout"},
      *     description="Метод возвращает тип тренировки по id",
+     *     security={{"bearer_token":{}}},
      *     @OA\Parameter(
      *          name="id",
      *          description="id типа тренировки",
@@ -143,6 +146,7 @@ class TypeOfWorkoutController extends Controller
      *     operationId="typeOfWorkoutUpdate",
      *     tags={"Type of workout"},
      *     description="Метод обновляет тип тренировки",
+     *     security={{"bearer_token":{}}},
      *     @OA\Parameter(
      *          name="id",
      *          description="id типа тренировки",
@@ -203,6 +207,7 @@ class TypeOfWorkoutController extends Controller
      *     operationId="typeOfWorkoutDelete",
      *     tags={"Type of workout"},
      *     description="Метод удаляет тип тренировки по id",
+     *     security={{"bearer_token":{}}},
      *     @OA\Parameter(
      *          name="id",
      *          description="id типа тренировки",

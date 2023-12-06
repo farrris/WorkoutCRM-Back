@@ -5,7 +5,254 @@
         "description": "Документация для Workout",
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
     "paths": {
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Метод для авторизации пользователя",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "example@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Метод для регистрации пользователя",
+                "operationId": "register",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user": {
+                                        "properties": {
+                                            "email": {
+                                                "type": "string",
+                                                "example": "example@gmail.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "123456789"
+                                            },
+                                            "role": {
+                                                "type": "string",
+                                                "example": "trainer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "profile": {
+                                        "properties": {
+                                            "first_name": {
+                                                "type": "string",
+                                                "example": "Alex"
+                                            },
+                                            "last_name": {
+                                                "type": "string",
+                                                "example": "Smirnov"
+                                            },
+                                            "age": {
+                                                "type": "int64",
+                                                "example": "23"
+                                            },
+                                            "gender": {
+                                                "type": "string",
+                                                "example": "male"
+                                            },
+                                            "sports_experience": {
+                                                "type": "string",
+                                                "example": "4 года"
+                                            },
+                                            "sports_level": {
+                                                "type": "string",
+                                                "example": "advanced"
+                                            },
+                                            "kind_of_sport_id": {
+                                                "type": "int64",
+                                                "example": "1"
+                                            },
+                                            "food_type": {
+                                                "type": "string",
+                                                "example": "cut"
+                                            },
+                                            "training_days": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "example": [
+                                                    "monday",
+                                                    "wednesday",
+                                                    "friday"
+                                                ]
+                                            },
+                                            "work_experience": {
+                                                "type": "string",
+                                                "example": "1 год"
+                                            },
+                                            "rate_per_hour": {
+                                                "type": "string",
+                                                "example": "1000"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Метод для выхода из системы",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Метод для обновления jwt токенов пользователя",
+                "operationId": "refresh",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/protected": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Метод для получения информации о текущем авторизованном пользователе или проверки авторизации",
+                "operationId": "protected",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
         "/api/v1/type-of-workout": {
             "get": {
                 "tags": [
@@ -20,7 +267,7 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "video": {
+                                        "typeOfWorkout": {
                                             "$ref": "#/components/schemas/TypeOfWorkout"
                                         }
                                     },
@@ -29,7 +276,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/api/v1/type-of-workout/": {
@@ -65,7 +317,7 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "video": {
+                                        "typeOfWorkout": {
                                             "$ref": "#/components/schemas/TypeOfWorkout"
                                         }
                                     },
@@ -74,7 +326,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/api/v1/type-of-workout/{id}": {
@@ -102,7 +359,7 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "video": {
+                                        "typeOfWorkout": {
                                             "$ref": "#/components/schemas/TypeOfWorkout"
                                         }
                                     },
@@ -114,9 +371,14 @@
                     "404": {
                         "description": "NOT FOUND"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             },
-            "post": {
+            "put": {
                 "tags": [
                     "Type of workout"
                 ],
@@ -159,7 +421,7 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "video": {
+                                        "typeOfWorkout": {
                                             "$ref": "#/components/schemas/TypeOfWorkout"
                                         }
                                     },
@@ -171,7 +433,12 @@
                     "404": {
                         "description": "NOT FOUND"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -197,12 +464,125 @@
                     "404": {
                         "description": "NOT FOUND"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         }
     },
     "components": {
         "schemas": {
+            "KindOfSport": {
+                "title": "User",
+                "description": "Пользователь",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "Название вида спорта",
+                        "example": "fitness"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "Profile": {
+                "title": "Profile",
+                "description": "Профиль пользователя",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "first_name": {
+                        "title": "first_name",
+                        "description": "Имя пользователя",
+                        "type": "string",
+                        "example": "Alexey"
+                    },
+                    "last_name": {
+                        "title": "last_name",
+                        "description": "Фамилия пользователя",
+                        "type": "string",
+                        "example": "Smirnov"
+                    },
+                    "age": {
+                        "title": "age",
+                        "description": "Возраст пользователя",
+                        "format": "int64",
+                        "example": 23
+                    },
+                    "gender": {
+                        "title": "gender",
+                        "description": "Пол пользователя",
+                        "type": "string",
+                        "example": "male"
+                    },
+                    "sports_experience": {
+                        "title": "sports_experience",
+                        "description": "Стаж тренировок пользователя",
+                        "type": "string",
+                        "example": "4 года"
+                    },
+                    "sports_level": {
+                        "title": "sports_experience",
+                        "description": "Спортивный опыт пользователя",
+                        "type": "string",
+                        "example": "advanced"
+                    },
+                    "kind_of_sport": {
+                        "$ref": "#/components/schemas/KindOfSport"
+                    },
+                    "food_type": {
+                        "title": "food_type",
+                        "description": "Режим питания пользователя",
+                        "type": "string",
+                        "example": "cut"
+                    },
+                    "training_days": {
+                        "title": "training_days",
+                        "description": "Расписание тренировок пользователя",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "monday",
+                            "wednesday",
+                            "friday"
+                        ]
+                    },
+                    "work_experience": {
+                        "title": "work_experience",
+                        "description": "Стаж работы тренера",
+                        "type": "string",
+                        "example": "1 год"
+                    },
+                    "rate_per_hour": {
+                        "title": "rate_per_hour",
+                        "description": "Ставка тренера за час",
+                        "type": "number",
+                        "format": "float",
+                        "example": "1000"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Profile"
+                }
+            },
             "TypeOfWorkout": {
                 "title": "TypeOfWorkout",
                 "description": "Тип тренировки",
@@ -224,6 +604,43 @@
                 "xml": {
                     "name": "TypeOfWorkout"
                 }
+            },
+            "User": {
+                "title": "User",
+                "description": "Пользователь",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "email": {
+                        "title": "title",
+                        "description": "email пользователя",
+                        "type": "string",
+                        "example": "example@gmail.com"
+                    },
+                    "role": {
+                        "title": "role",
+                        "description": "Роль пользователя",
+                        "type": "string",
+                        "example": "trainer"
+                    },
+                    "profile": {
+                        "$ref": "#/components/schemas/Profile"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "http",
+                "scheme": "bearer"
             }
         }
     }

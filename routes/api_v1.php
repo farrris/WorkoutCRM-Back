@@ -20,7 +20,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('logout', 'logout')->middleware("auth:api");
     Route::post('refresh', 'refresh')->middleware("auth:api");
-    Route::post('protected', 'protected')->middleware("auth:api");
+    Route::get('protected', 'protected')->middleware("auth:api");
 });
 
 Route::apiResource("/type-of-workout", TypeOfWorkoutController::class)->middleware("auth:api");
