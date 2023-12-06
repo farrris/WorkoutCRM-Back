@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\TypeOfWorkoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,5 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh')->middleware("auth:api");
     Route::post('protected', 'protected')->middleware("auth:api");
 });
+
+Route::apiResource("/type-of-workout", TypeOfWorkoutController::class)->middleware("auth:api");
