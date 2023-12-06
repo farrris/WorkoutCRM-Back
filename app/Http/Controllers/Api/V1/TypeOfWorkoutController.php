@@ -138,7 +138,7 @@ class TypeOfWorkoutController extends Controller
     }
 
     /**
-     * @OA\Post(
+     * @OA\Put(
      *     path="/api/v1/type-of-workout/{id}",
      *     operationId="typeOfWorkoutUpdate",
      *     tags={"Type of workout"},
@@ -225,7 +225,9 @@ class TypeOfWorkoutController extends Controller
      * @return JsonResponse
      */
     public function destroy(TypeOfWorkout $typeOfWorkout): JsonResponse
-    {
+    {   
+        $this->typeOfWorkoutService->destroy($typeOfWorkout);
+
         return ResponseService::success(
             message: "type of workout succesful deleted"
         );
